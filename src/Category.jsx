@@ -1,4 +1,5 @@
 import React from 'react';
+import TodoItem from './TodoItem';
 
 class Category extends React.Component {
   constructor(props) {
@@ -11,7 +12,14 @@ class Category extends React.Component {
     return (
       <div>
         <input />
-        <button type={'button'} className={'btn btn-primary'}>{'Add Category'}</button>
+        <button
+          type={'button'}
+          className={'btn btn-primary'}
+        >
+          {'Add Category'}
+        </button>
+
+        <TodoItem />
       </div>
     );
   }
