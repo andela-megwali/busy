@@ -1,28 +1,28 @@
 import React from 'react';
-import TodoItem from './TodoItem';
+// import TodoItem from './TodoItem';
 
-class Category extends React.Component {
-  constructor(props) {
-    super(props);
+// class Category extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {};
-  }
+//     this.state = {};
+//   }
 
-  render() {
-    return (
-      <div>
-        <input />
-        <button
-          type={'button'}
-          className={'btn btn-primary'}
-        >
-          {'Add Category'}
-        </button>
+//   render() {
+//     return (
+//       <div className={'container'}>
+//         <TodoItem />
+//       </div>
+//     );
+//   }
+// }
 
-        <TodoItem />
-      </div>
-    );
-  }
-}
+const Category = (props) => {
+  return (
+    <div className={'container'}>
+      <p>{props.name}</p>
+    </div>
+  );
+};
 
 export default Category;
