@@ -7,8 +7,8 @@ const Category = (props) => {
       <div className={'card category-card'}>
         <div className={'card-body'}>
           <h4 className={'card-title'}>{props.name}</h4>
-          <p className={'card-text'}>{props.categoryDescription}</p>
-          <a href="#" className={'btn btn-primary'}>View List</a>
+          <p className={'card-text'}>{props.description}</p>
+          <a href={`/category/${props.name}`} className={'btn btn-primary'}>View List</a>
         </div>
       </div>
     </div>

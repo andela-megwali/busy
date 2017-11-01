@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Category from './Category'
 
-class App extends Component {
+class Landing extends Component {
   constructor(props) {
     super(props);
 
@@ -86,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Landing;
