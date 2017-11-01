@@ -7,13 +7,15 @@ class TodoList extends React.Component {
     super(props);
 
     this.state = {
-      todoItems: JSON.parse(localStorage.todoItems),
+      categories: localStorage.length > 0 && JSON.parse(localStorage.categories),
+      todoItems: [],
       todoItem: '',
       todoDescription: '',
     };
 
     this.handleInput = this.handleInput.bind(this);
     this.addTodo = this.addTodo.bind(this);
+    this.getTodoItems = this.getTodoItems.bind(this);
     this.renderTodoItems = this.renderTodoItems.bind(this);
   }
 
@@ -27,18 +29,33 @@ class TodoList extends React.Component {
   }
 
   addTodo() {
-    const { todoItems, todoName, todoDescription } = this.state;
+    const { categories, todoName, todoDescription } = this.state;
+    const { category, todoItems } = this.getTodoItems(categories);
+    const { params: { name } } = this.props.match;
+
+    const newTodoItems = [...todoItems, { todoName, todoDescription }];
+    const newCategory = { ...category, todoItems: newTodoItems };
+
+    const newCategories = categories.map(item => item.categoryName === name ? newCategory : item);
+
+    localStorage.categories = JSON.stringify(newCategories);
 
     this.setState({
-      todoItems: [...todoItems, { todoName, todoDescription }],
+      todoItems: newTodoItems,
+      categories: newCategories,
       todoItem: '',
-    });
+    })
   }
 
-  renderTodoItems() {
-    const { todoItems } = this.state;
+  getTodoItems(categories) {
+    const { params: { name } } = this.props.match;
+    const category = categories.find(item => name === item.categoryName);
+    const todoItems = category.todoItems ? category.todoItems : {};
+    return { category, todoItems }
+  }
 
-    return todoItems.map(item => (
+  renderTodoItems(todoItems) {
+    return todoItems && todoItems.map(item => (
       <TodoItem
         key={item.todoName}
         name={item.todoName}
@@ -49,14 +66,8 @@ class TodoList extends React.Component {
   }
 
   render() {
-    const categories = JSON.parse(localStorage.categories);
-    const { params: { name } } = this.props.match;
-    const category = categories.find(item => name === item.categoryName);
-
-    category.todoItems = JSON.stringify(this.state.todoItems);
-    categories.map(item => item.name === name ? category : item);
-
-    localStorage.categories = JSON.stringify(categories.map(item => item.name === name ? category : item));
+    const { categories } = this.state;
+    const { category, todoItems } = this.getTodoItems(categories);
 
     return (
       <div>
@@ -78,7 +89,7 @@ class TodoList extends React.Component {
             </div>
           </div>
           <h4>Your Todos</h4>
-          {this.renderTodoItems()}
+          {this.renderTodoItems(todoItems)}
           <hr />
           <h4>{'Add New Todo'}</h4>
           <div className={'container'}>
