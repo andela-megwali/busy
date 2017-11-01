@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      categories: JSON.parse(localStorage.categories),
+      categories: localStorage.length > 0 && JSON.parse(localStorage.categories),
       category: '',
       categoryName: '',
       categoryDescription: '',
@@ -40,7 +40,7 @@ class App extends Component {
   renderCategoryBlocks() {
     const { categories } = this.state;
 
-    return categories.map(category => (
+    return categories && categories.map(category => (
       <Category
         key={category.categoryName}
         name={category.categoryName}
