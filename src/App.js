@@ -8,7 +8,9 @@ class App extends Component {
 
     this.state = {
       categories: [],
+      category: '',
       categoryName: '',
+      categoryDescription: '',
     };
 
     this.handleInput = this.handleInput.bind(this);
@@ -17,15 +19,19 @@ class App extends Component {
   }
 
   handleInput(event) {
-    this.setState({ categoryName: event.target.value });
+    const { value } = event.target;
+    const categoryName = value.split(':')[0];
+    const categoryDescription = value.split(':')[1];
+
+    this.setState({ category: value, categoryName, categoryDescription });
   }
 
   addCategory() {
-    const { categories, categoryName } = this.state;
+    const { categories, categoryName, categoryDescription } = this.state;
 
     this.setState({
-      categories: [...categories, categoryName],
-      categoryName: '',
+      categories: [...categories, { categoryName, categoryDescription }],
+      category: '',
     });
   }
 
@@ -34,40 +40,43 @@ class App extends Component {
 
     return categories.map(category => (
       <Category
-        key={category}
-        name={category}
+        key={category.categoryName}
+        name={category.categoryName}
+        categoryDescription={category.categoryDescription}
       />
     ));
   }
 
   render() {
     return (
-      <div className={'App'}>
-        <header className={'App-header'}>
-          <h1 className={'App-title'}>{'Time to get busy'}</h1>
-        </header>
-        <p className={'App-intro'}>
-          {'Todo today'}
-        </p>
-        <div className={'container'}>
-          <div className={'input-group'}>
-            <input
-              type={'text'}
-              className={'form-control'}
-              placeholder={'Category name'}
-              aria-label={'Search for...'}
-              onChange={this.handleInput}
-              value={this.state.categoryName}
-            />
-            <span className={'input-group-btn'}>
-              <button
-                className={'btn btn-primary'}
-                type={'button'}
-                onClick={this.addCategory}
-              >
-                {'Add Category'}
-              </button>
-            </span>
+      <div>
+        <div className={'App'}>
+          <header className={'App-header'}>
+            <h1 className={'App-title'}>{'Time to get busy'}</h1>
+          </header>
+          <p className={'App-intro'}>
+            {'Todo today'}
+          </p>
+          <div className={'container'}>
+            <div className={'input-group'}>
+              <input
+                id={'categoryName'}
+                type={'text'}
+                className={'form-control'}
+                placeholder={'Category name: Description'}
+                value={this.state.category}
+                onChange={this.handleInput}
+              />
+              <span className={'input-group-btn'}>
+                <button
+                  className={'btn btn-primary'}
+                  type={'button'}
+                  onClick={this.addCategory}
+                >
+                  {'Add Category'}
+                </button>
+              </span>
+            </div>
           </div>
         </div>
         {this.renderCategoryBlocks()}
