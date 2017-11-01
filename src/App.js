@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import Category from './Category'
+import Header from './Header';
+import Category from './Category';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      categories: [],
+      categories: JSON.parse(localStorage.categories),
       category: '',
       categoryName: '',
       categoryDescription: '',
@@ -44,20 +45,18 @@ class App extends Component {
         key={category.categoryName}
         name={category.categoryName}
         description={category.categoryDescription}
+        delete={this.deleteCategory}
       />
     ));
   }
 
   render() {
+    localStorage.categories = JSON.stringify(this.state.categories);
+
     return (
       <div>
+        <Header />
         <div className={'App'}>
-          <header className={'App-header'}>
-            <h1 className={'App-title'}>{'Time to get busy'}</h1>
-          </header>
-          <p className={'App-intro'}>
-            {'Todo today'}
-          </p>
           <div className={'container'}>
             <div className={'input-group'}>
               <input
