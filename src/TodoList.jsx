@@ -49,13 +49,13 @@ class TodoList extends React.Component {
 
   getTodoItems(categories) {
     const { params: { name } } = this.props.match;
-    const category = categories.find(item => name === item.categoryName);
+    const category = categories && categories.find(item => name === item.categoryName);
     const todoItems = category.todoItems ? category.todoItems : {};
     return { category, todoItems }
   }
 
   renderTodoItems(todoItems) {
-    return todoItems && todoItems.map(item => (
+    return todoItems && todoItems.map && todoItems.map(item => (
       <TodoItem
         key={item.todoName}
         name={item.todoName}
