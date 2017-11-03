@@ -7,7 +7,7 @@ class TodoList extends React.Component {
     super(props);
 
     this.state = {
-      categories: localStorage.length > 0 && JSON.parse(localStorage.categories),
+      categories: sessionStorage.length > 0 && JSON.parse(sessionStorage.categories),
       todoItems: [],
       todoItem: '',
       todoDescription: '',
@@ -38,7 +38,7 @@ class TodoList extends React.Component {
 
     const newCategories = categories.map(item => item.categoryName === name ? newCategory : item);
 
-    localStorage.categories = JSON.stringify(newCategories);
+    sessionStorage.categories = JSON.stringify(newCategories);
 
     this.setState({
       todoItems: newTodoItems,

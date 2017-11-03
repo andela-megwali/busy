@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      categories: localStorage.length > 0 && JSON.parse(localStorage.categories),
+      categories: sessionStorage.length > 0 && JSON.parse(sessionStorage.categories),
       category: '',
       categoryName: '',
       categoryDescription: '',
@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   render() {
-    localStorage.categories = JSON.stringify(this.state.categories);
+    sessionStorage.categories = JSON.stringify(this.state.categories);
 
     return (
       <div>
